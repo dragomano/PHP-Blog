@@ -124,10 +124,16 @@ markdown_extensions:
       title: Содержание
       permalink: ⚓︎
       permalink_title: Постоянная ссылка
-      slugify: !!python/name:slugify.slugify
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.details
   - pymdownx.keys
   - pymdownx.critic
