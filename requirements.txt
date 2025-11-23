@@ -1,0 +1,4 @@
+mkdocs-material
+pymdown-extensions
+mkdocs-minify-plugin
+mkdocs-rss-plugin

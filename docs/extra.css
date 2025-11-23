@@ -1,0 +1,55 @@
+.md-footer-meta__inner {
+  justify-content: center;
+}
+
+.md-source__facts {
+  display: none;
+}
+
+.md-copyright__highlight {
+  text-align: center;
+}
+
+.md-content__inner img {
+  display: block;
+  margin: 0 auto;
+}
+
+.md-tags {
+  display: flex !important;
+  align-items: center;
+}
+
+.md-tags .md-nav__link {
+  align-items: center;
+  margin-left: auto;
+}
+
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #4f5b93;
+}
+
+.md-social__link[title="GitLab"] {
+  color: orange !important;
+}
+
+.form-group {
+  display: flex;
+  gap: 5px;
+}
+
+.md-textarea {
+  margin-top: 5px;
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  resize: vertical;/
+}
+
+.md-textarea:focus {
+  border-color: orange;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

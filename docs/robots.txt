@@ -1,0 +1,8 @@
+User-agent: *
+Content-Signal: ai-train=no, search=yes, ai-input=no
+Disallow: /about/
+Disallow: /page/
+Disallow: /tags/
+Disallow: /*?
+
+Sitemap: https://php.dragomano.ru/sitemap.xml

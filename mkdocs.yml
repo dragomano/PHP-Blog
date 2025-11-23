@@ -1,0 +1,183 @@
+site_name: PHP и все-все-все
+site_description: Статьи на тему веб-разработки (PHP, JS)
+site_author: bugo@dragomano.ru (Bugo)
+site_url: https://php.dragomano.ru/
+
+repo_url: https://github.com/dragomano/PHP-Blog
+edit_uri: edit/main/docs/
+
+copyright: © Bugo, 2020—2025
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: ru
+  features:
+    - navigation.path
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.instant.prefetch
+    - navigation.tracking
+    - navigation.indexes
+    - navigation.footer
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    - content.tabs.link
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+  icon:
+    logo: fontawesome/brands/php
+    repo: simple/foodpanda
+    tag:
+      js: fontawesome/brands/js
+      osp: material/console
+      tools: material/tools
+      nette: simple/nette
+      docker: material/docker
+      frameworks: simple/framework
+      laravel: fontawesome/brands/laravel
+      solid: simple/solid
+      alpine: simple/alpinedotjs
+      vue: simple/vuedotjs
+      svelte: simple/svelte
+      react: simple/react
+      preact: simple/preact
+  favicon: images/logo.svg
+  font:
+    text: Inter
+    code: Fira Code
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Авто
+    - media: "(prefers-color-scheme: light)"
+      primary: light blue
+      accent: orange
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Тёмный режим
+    - media: "(prefers-color-scheme: dark)"
+      primary: black
+      accent: orange
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Светлый режим
+
+extra:
+  generator: false
+  tags:
+    JS: js
+    OS Panel: osp
+    инструменты: tools
+    Nette: nette
+    Docker: docker
+    фреймворки: frameworks
+    Laravel: laravel
+    SOLID: solid
+    Alpine: alpine
+    Vue: vue
+    Svelte: svelte
+    React: react
+    Preact: preact
+  status:
+    new: Недавно добавлена
+  social:
+    - icon: material/creative-commons
+      link: https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ru
+      name: Лицензия CC BY-NC-SA 4.0
+    - icon: material/github
+      link: https://github.com/dragomano
+      name: GitHub
+    - icon: material/gitlab
+      link: https://gitlab.com/dragomano
+      name: GitLab
+    - icon: material/sitemap
+      link: /sitemap.xml
+      name: Sitemap
+    - icon: material/rss
+      link: /rss.xml
+      name: RSS
+
+extra_javascript:
+  - extra.js
+
+extra_css:
+  - extra.css
+
+markdown_extensions:
+  - meta
+  - tables
+  - def_list
+  - attr_list
+  - md_in_html
+  - admonition
+  - toc:
+      title: Содержание
+      permalink: ⚓︎
+      permalink_title: Постоянная ссылка
+      slugify: !!python/name:slugify.slugify
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.keys
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+hooks:
+  - hooks/fonts.py
+
+plugins:
+  - search:
+      lang:
+        - en
+        - ru
+  - minify: # pip install mkdocs-minify-plugin
+      minify_html: true
+  - tags
+  - blog:
+      blog_dir: .
+      blog_toc: true
+      post_url_format: "{slug}"
+      post_readtime: false
+      post_excerpt: required
+      post_excerpt_max_authors: 0
+      archive: false
+      authors: false
+  - rss: # pip install mkdocs-rss-plugin
+      match_path: posts/*
+      date_from_meta:
+        as_creation: date
+        as_update: update
+      feed_ttl: 1440
+      image: https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/128px-Feed-icon.svg.png
+      length: 12
+      pretty_print: false
+      abstract_chars_count: 160 # -1 for full content
+      abstract_delimiter: <!-- more -->
+      json_feed_enabled: false
+      feeds_filenames:
+        rss_created: rss.xml
+        rss_updated: rss-updated.xml
+      categories:
+        - tags
