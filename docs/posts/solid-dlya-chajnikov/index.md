@@ -250,60 +250,119 @@ class Second extends First
 
 Подклассы должны дополнять, а не замещать поведение базового класса.
 
-Предположим, у нас есть базовый класс `Bird` и подклассы `Sparrow` и `Penguin`:
+LSP — это про предсказуемость.
+
+Проблемный дизайн:
 
 ```php
 <?php
 
-class Bird
+class Employee
 {
-    public function fly()
+    public function calculateSalary(): float
     {
-        return "Я умею летать!";
+        return 50000; // Базовая зарплата
+    }
+
+    public function work(): string
+    {
+        return "Сотрудник работает";
     }
 }
 
-class Sparrow extends Bird
+class FullTimeEmployee extends Employee
 {
-    // Воробей может летать
+    // Штатный сотрудник
 }
 
-class Penguin extends Bird
+class Intern extends Employee
 {
-    public function fly()
+    public function calculateSalary(): float
     {
-        throw new Exception("Я не умею летать!");
+        throw new Exception("Стажеры не получают зарплату, только стипендию!");
     }
 }
 ```
 
-В этом примере `Sparrow` корректно наследует поведение `Bird`, но `Penguin` нарушает принцип подстановки Лисков, так как он не умеет летать. Если мы заменим объект `Bird` на `Penguin`, это приведёт к ошибке.
-
-Чтобы избежать этого, мы можем использовать интерфейсы или абстрактные классы:
+Решение:
 
 ```php
 <?php
 
-interface Flyable
+interface Worker
 {
-    public function fly();
+    public function work(): string;
 }
 
-class Sparrow implements Flyable
+interface PaidWorker extends Worker
 {
-    public function fly()
+    public function calculateSalary(): float;
+}
+
+class FullTimeEmployee implements PaidWorker
+{
+    public function work(): string
     {
-        return "Я умею летать!";
+        return "Штатный сотрудник работает 8 часов";
+    }
+
+    public function calculateSalary(): float
+    {
+        return 50000;
     }
 }
 
-class Penguin
+class Intern implements Worker
 {
-    // Пингвины не реализуют интерфейс Flyable
+    public function work(): string
+    {
+        return "Стажер учится и помогает";
+    }
+
+    // Нет метода calculateSalary() - стажеры не получают зарплату
+}
+
+class Contractor implements PaidWorker
+{
+    public function work(): string
+    {
+        return "Фрилансер выполняет проект";
+    }
+
+    public function calculateSalary(): float
+    {
+        return 75000; // Почасовая оплата
+    }
+}
+
+// Функции для работы с оплатой
+function processPayroll(PaidWorker $worker)
+{
+    echo $worker->work() . "\n";
+    echo "Зарплата: " . $worker->calculateSalary() . "\n";
+}
+
+function trackWork(Worker $worker)
+{
+    echo "Отслеживание: " . $worker->work() . "\n";
 }
 ```
 
-Теперь, если у нас есть функция, которая принимает `Flyable`, она будет работать только с классами, которые могут летать, и не будет пытаться использовать `Penguin`, что соответствует принципу подстановки Лисков.
+Использование:
+
+```php
+<?php
+
+$fullTime = new FullTimeEmployee();
+$intern = new Intern();
+$contractor = new Contractor();
+
+processPayroll($fullTime);   // OK
+processPayroll($contractor); // OK
+// processPayroll($intern);   // Ошибка - стажер не PaidWorker
+
+trackWork($fullTime);   // OK
+```
 
 ### Что ещё почитать?
 
@@ -384,7 +443,7 @@ class Penguin
 
 Клиенты не должны зависеть от неиспользуемых ими методов.
 
-Лучше использовать несколько небольших интерфейсов с используемыми методами, чем один большой с кучей методов, которые необходимо реализовывать, даже если вам они не нужны.
+Лучше применять несколько небольших интерфейсов с используемыми методами, чем один большой с кучей методов, которые необходимо реализовывать, даже если вам они не нужны.
 
 Неправильно:
 
