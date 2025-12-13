@@ -2,25 +2,26 @@
 
 <!-- Extrahead -->
 {% block extrahead %}
-  {% if page and page.meta and page.meta.og_type %}
-    <meta property="og:type" content="{{ page.meta.og_type }}">
-  {% else %}
-    <meta property="og:type" content="article">
-  {% endif %}
-  <meta property="og:url" content="{{ page.canonical_url }}">
-  {% if page and page.meta and page.meta.title %}
-    <meta property="og:title" content="{{ page.meta.title }}">
-  {% else %}
-    <meta property="og:title" content="{{ config.site_name }}">
-  {% endif %}
-  {% if page and page.meta and page.meta.description %}
-    <meta property="og:description" content="{{ page.meta.description }}">
-  {% endif %}
-  <meta property="og:locale" content="ru_RU" />
-  <meta property="og:site_name" content="{{ config.site_name }}" />
-  {% if page and page.meta and page.meta.og_image %}
-    <meta property="og:image" content="{{ page.canonical_url }}{{ page.meta.og_image }}">
-  {% else %}
-    <meta property="og:image" content="{{ page.canonical_url }}images/logo.jpg">
-  {% endif %}
+<meta name="google-site-verification" content="fq1A8llkn1XRVaPfBInN-TPoDtGsEUQmvEr3QVrEsyI">
+{% if page and page.meta and page.meta.og_type %}
+<meta property="og:type" content="{{ page.meta.og_type }}">
+{% else %}
+<meta property="og:type" content="article">
+{% endif %}
+<meta property="og:url" content="{{ page.canonical_url }}">
+{% if page and page.meta and page.meta.title %}
+<meta property="og:title" content="{{ page.meta.title }}">
+{% else %}
+<meta property="og:title" content="{{ config.site_name }}">
+{% endif %}
+{% if page and page.meta and page.meta.description %}
+<meta property="og:description" content="{{ page.meta.description }}">
+{% endif %}
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="{{ config.site_name }}">
+{% if page and page.meta and page.meta.og_image %}
+<meta property="og:image" content="{{ page.canonical_url }}{{ page.meta.og_image }}">
+{% else %}
+<meta property="og:image" content="{{ page.canonical_url }}images/logo.jpg">
+{% endif %}
 {% endblock %}
