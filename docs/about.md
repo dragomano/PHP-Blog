@@ -14,11 +14,11 @@ search:
 
 Энтузиаст Open Source, PHP-разработчик
 
-![Наиболее используемые языки Bugo на Github](https://github-readme-stats.vercel.app/api/top-langs/?username=dragomano&locale=ru&layout=donut#only-light)
-![Наиболее используемые языки Bugo на Github](https://github-readme-stats.vercel.app/api/top-langs/?username=dragomano&locale=ru&layout=donut&theme=github_dark#only-dark)
+![Наиболее используемые языки Bugo на Github](https://raw.githubusercontent.com/dragomano/PHP-Blog/refs/heads/main/profile/top-langs.svg#only-light)
+![Наиболее используемые языки Bugo на Github](https://raw.githubusercontent.com/dragomano/PHP-Blog/refs/heads/main/profile/top-langs_dark.svg#only-dark)
 
-![Статистика активности Bugo на GitHub](https://github-readme-stats.vercel.app/api?username=dragomano&locale=ru&show_icons=true#only-light)
-![Статистика активности Bugo на GitHub](https://github-readme-stats.vercel.app/api?username=dragomano&locale=ru&show_icons=true&theme=github_dark#only-dark)
+![Статистика активности Bugo на GitHub](https://raw.githubusercontent.com/dragomano/PHP-Blog/refs/heads/main/profile/stats.svg#only-light)
+![Статистика активности Bugo на GitHub](https://raw.githubusercontent.com/dragomano/PHP-Blog/refs/heads/main/profile/stats_dark.svg#only-dark)
 
 ## Связаться
 
