@@ -6,7 +6,7 @@ site_url: https://php.dragomano.ru/
 repo_url: https://github.com/dragomano/PHP-Blog
 edit_uri: edit/main/docs/
 
-copyright: © Bugo, 2020—2025
+copyright: © Bugo, 2020—2026
 
 theme:
   name: material
