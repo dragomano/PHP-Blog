@@ -14,7 +14,7 @@
 
 ### Как использовать
 При использовании материалов укажите:
-> © Bugo (php.dragomano.ru), 2025.
+> © Bugo (php.dragomano.ru), 2026.
 > Лицензия: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 Если вы вносите изменения, добавьте: «Адаптировано из оригинала с сайта https://php.dragomano.ru».
