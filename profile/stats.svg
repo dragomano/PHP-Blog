@@ -9,7 +9,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">&#1057;&#1090;&#1072;&#1090;&#1080;&#1089;&#1090;&#1080;&#1082;&#1072; GitHub &#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1103; Bugo, Rank: A+</title>
-        <desc id="descId">Всего звёзд: 141, Всего коммитов  (За прошлый год) : 1494, Всего запросов изменений: 570, Всего вопросов: 164, Внесено вклада (за прошлый год): 14</desc>
+        <desc id="descId">Всего звёзд: 140, Всего коммитов  (За прошлый год) : 1470, Всего запросов изменений: 570, Всего вопросов: 164, Внесено вклада (за прошлый год): 14</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -73,7 +73,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 28.732027126426036;
+        stroke-dashoffset: 29.16434357302667;
       }
     }
   
@@ -162,7 +162,7 @@
         x="269.01"
         y="12.5"
         data-testid="stars"
-      >141</text>
+      >140</text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms" transform="translate(25, 0)">
