@@ -7,6 +7,8 @@ date: 2020-03-06
 links:
   - posts/vozmozhnosti-open-server-panel-6/index.md
   - posts/docker-kak-zamena-open-server/index.md
+  - posts/laravel-herd/index.md
+  - posts/znakomstvo-s-flyenv/index.md
 tags:
   - OS Panel
   - инструменты
