@@ -6,6 +6,8 @@ date: 2023-04-01
 links:
   - posts/obnovlenie-komponentov-open-server/index.md
   - posts/docker-kak-zamena-open-server/index.md
+  - posts/laravel-herd/index.md
+  - posts/znakomstvo-s-flyenv/index.md
 tags:
   - OS Panel
   - инструменты
