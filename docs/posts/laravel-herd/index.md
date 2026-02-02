@@ -3,6 +3,11 @@ title: 'Laravel Herd'
 description: 'Краткий обзор современной среды разработки Laravel и PHP для MacOS и Windows.'
 slug: laravel-herd
 date: 2024-03-26
+links:
+  - posts/obnovlenie-komponentov-open-server/index.md
+  - posts/vozmozhnosti-open-server-panel-6/index.md
+  - posts/docker-kak-zamena-open-server/index.md
+  - posts/znakomstvo-s-flyenv/index.md
 tags:
   - Herd
   - Laravel
