@@ -141,8 +141,13 @@ tags:
 
 Начиная с версии `6.4.0` проблем с обновлениями компонентов должно стать меньше:
 
-- [Релизы PHP для Windows](https://github.com/OSPanel/php-windows-builder)
-- [Релизы Nginx для Windows](https://github.com/OSPanel/nginx)
+- [Релизы сборок и расширений PHP для Windows](https://github.com/OSPanel/php-windows-builder/releases)
+- [Релизы Nginx для Windows](https://github.com/OSPanel/nginx/releases)
+- [Релизы Caddy для Windows](https://github.com/OSPanel/caddy/releases)
+
+Просто скачиваем нужные версии (с пометкой `-nts-`), останавливаем OS Panel, распаковываем свежие версии поверх старых, запускаем панельку заново.
+
+Распаковывать нужно в соответствующие директории внутри `<Путь к OS Panel>\modules`.
 
 ### Процесс обновления компонентов для версий OS Panel ниже `6.4.0`
 
@@ -262,7 +267,7 @@ max_file_uploads   = 3
 В контекстное меню каждого проекта можно добавить пункты для открытия папки проекта в нужных вам приложениях. Для этого воспользуйтесь графическим интерфейсом, на вкладке «Редактор меню». Пример для VS Code и PHPStorm:
 
 ```ini
-[22]
+[24]
 
 caption        = Открыть в VS Code
 category       = projects
@@ -270,7 +275,7 @@ command        = "%COMSPEC%" /c "code {project_dir}"
 hide           = on
 icon           = newspaper
 
-[23]
+[25]
 
 caption        = Открыть в PHPStorm
 category       = projects
@@ -300,7 +305,7 @@ icon           = code
 
 !!! info "Информация"
 
-    Протестировано на версиях OSP 6.0.0-6.4.0
+    Протестировано на версиях OSP 6.0.0-6.5.1
 
 - Экспортируйте нужные вам базы данных, затем закройте OS Panel.
 - Переименуйте папку с текущей сборкой, например, в `OSP_old`.
