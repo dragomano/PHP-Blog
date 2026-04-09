@@ -160,6 +160,10 @@ plugins:
         - ru
   - minify: # pip install mkdocs-minify-plugin
       minify_html: true
+  - redirects: # pip install mkdocs-redirects
+      redirect_maps:
+        "symfony-dlya-samyh-malenkih/index.md": "posts/symfony-s-nulya/index.md"
+        "razrabotka-laravel-proektov-na-osnove-api/index.md": "posts/laravel-proekty-s-api-v-tsentre-arhitektury/index.md"
   - tags
   - blog:
       blog_dir: .

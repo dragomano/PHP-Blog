@@ -1,7 +1,7 @@
 ---
-title: 'Symfony для самых маленьких'
-description: 'Лаконичный и драйвовый гайд по Symfony: от установки до первой базы данных'
-slug: symfony-dlya-samyh-malenkih
+title: 'Symfony с нуля: установка, контроллеры, Twig и Doctrine'
+description: 'Практический старт с Symfony: установка, первый контроллер, Twig и работа с Doctrine'
+slug: symfony-s-nulya
 date: 2024-11-14
 tags:
   - Symfony
@@ -237,7 +237,7 @@ Symfony — это инструмент для тех, кто ценит пор�
 - [Официальная документация Symfony](https://symfony.com/doc/current/index.html)
 - [SymfonyCasts — лучшие видеоуроки](https://symfonycasts.com/)
 - [Шпаргалка по Symfony](https://softdreams.ru/dev/symfony-cheat-sheet/)
-- [Symfony & Vite: Современный фронтенд](https://symfony-vite.pentatrion.com)
+- [Symfony и Vite: Современный фронтенд](https://symfony-vite.pentatrion.com)
 
 [maker]: https://symfony.com/bundles/SymfonyMakerBundle/current/index.html
 [composer]: https://getcomposer.org/
