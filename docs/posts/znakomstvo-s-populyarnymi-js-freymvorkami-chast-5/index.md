@@ -38,10 +38,10 @@ tags:
     npm create vite@latest svelte-todo -- --template svelte
     ```
 
-    Теперь перейдите в созданную папку `svelte-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `svelte-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    npm i -D tailwindcss@next @tailwindcss/vite@next
+    npm i -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-pnpm: pnpm"
@@ -49,10 +49,10 @@ tags:
     pnpm create vite svelte-todo --template svelte
     ```
 
-    Теперь перейдите в созданную папку `svelte-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `svelte-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    pnpm add -D tailwindcss@next @tailwindcss/vite@next
+    pnpm add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-yarn: Yarn"
@@ -60,10 +60,10 @@ tags:
     yarn create vite svelte-todo --template svelte
     ```
 
-    Теперь перейдите в созданную папку `svelte-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `svelte-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    yarn add -D tailwindcss@next @tailwindcss/vite@next
+    yarn add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-bun: Bun"
@@ -71,36 +71,43 @@ tags:
     bun create vite svelte --template svelte
     ```
 
-    Теперь перейдите в созданную папку `svelte-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `svelte-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    bun add -D tailwindcss@next @tailwindcss/vite@next
+    bun add -D unocss @iconify-json/heroicons
     ```
 
 и обновите `vite.config.js`:
 
 ```js
-import { defineConfig } from 'vite';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
-import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'vite'
+import UnoCSS from 'unocss/vite'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [svelte(), tailwindcss()],
+  plugins: [UnoCSS(), svelte()],
 });
 ```
 
-В файл `src/app.css` замените всё содержимое на следующий код:
+Добавьте `uno.config.js`:
 
-```css
-@import "tailwindcss";
+```js
+import { defineConfig, presetIcons, presetWind4 } from 'unocss'
+
+export default defineConfig({
+  presets: [
+    presetWind4(),
+    presetIcons(),
+  ],
+})
 ```
 
 Файл `src/main.js`:
 
 ```js
 import { mount } from 'svelte'
-import './app.css'
+import 'virtual:uno.css'
 import App from './App.svelte'
 
 const app = mount(App, {
@@ -207,10 +214,10 @@ export default app
 </div>
 ```
 
-Здесь мы видим `each` — аналог цикла `for`. Обратите внимание, в каком порядке указаны переменные, а также индекс (`todo.id`):
+Здесь мы видим `each` — аналог цикла `for`. Обратите внимание, в каком порядке указаны переменные, а также индекс (`t.id`):
 
 ```html+twig
-{#each todos as todo (todo.id)}
+{#each todos as t (t.id)}
   <TodoItem {todo} />
 {/each}
 ```
@@ -231,10 +238,10 @@ export default app
 
   $effect(() => {
     (async () => {
-      await fetch('https://dummyapi.online/api/todos')
+      await fetch('https://dummyjson.com/todos')
         .then((response) => response.json())
         .then((data) => {
-          todos = data.slice(0, 10);
+          todos = data.todos.slice(0, 10);
         });
     })();
   });
@@ -247,21 +254,21 @@ export default app
 <script>
   // ...
 
-  const addTodo = (title) => {
+  const addTask = (title) => {
     if (!title) return;
 
     todos = todos.concat({
       id: crypto.randomUUID(),
-      title: title,
+      todo: title,
       completed: false,
     });
   };
 
-  const toggleTodo = (id) => {
+  const toggleTask = (id) => {
     todos = todos.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t));
   };
 
-  const deleteTodo = (id) => {
+  const deleteTask = (id) => {
     todos = todos.filter((todo) => todo.id !== id);
   };
 </script>
@@ -270,12 +277,12 @@ export default app
   <h1 class="text-2xl font-bold text-center py-4 bg-gray-100">{title}</h1>
   {#if todos.length}
     <ul class="list-none p-4">
-      {#each todos as todo (todo.id)}
-        <TodoItem {todo} toggle={() => toggleTodo(todo.id)} remove={() => deleteTodo(todo.id)} />
+      {#each todos as t (t.id)}
+        <TodoItem task={t} toggle={() => toggleTask(t.id)} remove={() => deleteTask(t.id)} />
       {/each}
     </ul>
   {/if}
-  <TodoForm submit={addTodo} />
+  <TodoForm submit={addTask} />
 </div>
 ```
 
@@ -289,7 +296,7 @@ export default app
 
 ```html+twig
 <script>
-  let { todo = $bindable(), toggle, remove } = $props();
+  let { task = $bindable(), toggle, remove } = $props();
 </script>
 ```
 
@@ -297,25 +304,10 @@ export default app
 
 ```html+twig
 <li class='flex items-center mb-2 hover:cursor-pointer' onclick={toggle}>
-  <input type='checkbox' class='mr-2' bind:checked={todo.completed} />
-  <span class:line-through={todo.completed}>{todo.title}</span>
-  <div class='ml-auto'>
-    <button class='text-gray-400 hover:text-gray-600' onclick={remove}>
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        fill='none'
-        viewBox='0 0 24 24'
-        stroke-width='1.5'
-        stroke='currentColor'
-        class='w-6 h-6'
-      >
-        <path
-          stroke-linecap='round'
-          stroke-linejoin='round'
-          d='M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0'
-        />
-      </svg>
-    </button>
+  <input type='checkbox' class='mr-2' bind:checked={task.completed} />
+  <span class:line-through={task.completed}>{task.title}</span>
+  <div class="ml-auto text-gray-400 hover:text-gray-600">
+    <button class="i-heroicons-trash w-6 h-6" onclick={remove}></button>
   </div>
 </li>
 ```
