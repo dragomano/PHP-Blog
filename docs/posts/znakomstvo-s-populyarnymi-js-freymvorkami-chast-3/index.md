@@ -44,10 +44,10 @@ tags:
     npm create vite@latest react-todo -- --template react
     ```
 
-    Теперь перейдите в созданную папку `react-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `react-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    npm i -D tailwindcss@next @tailwindcss/vite@next
+    npm i -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-pnpm: pnpm"
@@ -55,10 +55,10 @@ tags:
     pnpm create vite react-todo --template react
     ```
 
-    Теперь перейдите в созданную папку `react-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `react-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    pnpm add -D tailwindcss@next @tailwindcss/vite@next
+    pnpm add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-yarn: Yarn"
@@ -66,10 +66,10 @@ tags:
     yarn create vite react-todo --template react
     ```
 
-    Теперь перейдите в созданную папку `react-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `react-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    yarn add -D tailwindcss@next @tailwindcss/vite@next
+    yarn add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-bun: Bun"
@@ -77,29 +77,48 @@ tags:
     bun create vite react --template react
     ```
 
-    Теперь перейдите в созданную папку `react-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `react-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    bun add -D tailwindcss@next @tailwindcss/vite@next
+    bun add -D unocss @iconify-json/heroicons
     ```
 
 и обновите `vite.config.js`:
 
 ```js
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'vite'
+import UnoCSS from 'unocss/vite'
+import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [UnoCSS(), react()],
 });
 ```
 
-В файл `src/index.css` замените всё содержимое на следующий код:
+Добавьте `uno.config.js`:
 
-```css
-@import "tailwindcss";
+```js
+import { defineConfig, presetIcons, presetWind4 } from 'unocss'
+
+export default defineConfig({
+  presets: [
+    presetWind4(),
+    presetIcons(),
+  ],
+})
+```
+
+Обновите `src/main.jsx`:
+
+```jsx
+import { createRoot } from 'react-dom/client'
+import App from './App.jsx'
+import 'virtual:uno.css'
+
+createRoot(document.getElementById('root')).render(
+  <App />
+)
 ```
 
 Как и ранее, мы создадим 3 компонента, не считая корневого (`App.jsx`). Но прежде добавьте класс `bg-gray-200` элементу `body` в файле `index.html`, чтобы у страницы был серый фон.
@@ -169,12 +188,8 @@ function TodoList(props) {
         <li className="flex items-center mb-2 hover:cursor-pointer">
           <input type="checkbox" className="mr-2" checked>
           <span className="line-through">Вымыть пол</span>
-          <div className="ml-auto">
-            <button className="text-gray-400 hover:text-gray-600">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-              </svg>
-            </button>
+          <div class="ml-auto text-gray-400 hover:text-gray-600">
+            <button class="i-heroicons-trash w-6 h-6" />
           </div>
         </li>
       </ul>
@@ -206,15 +221,15 @@ function TodoList(props) {
 
   // Запрашиваем список задач при обновлении страницы
   useEffect(() => {
-    fetch('https://dummyapi.online/api/todos')
+    fetch('https://dummyjson.com/todos')
       .then((response) => response.json())
       .then((data) => {
-        setTodos(data.slice(0, 10));
+        setTodos(data.todos.slice(0, 10));
       });
   }, []);
 
   // Обработчик события добавления новой задачи
-  const addTodo = (title) => {
+  const addTask = (title) => {
     if (!title) return;
 
     // Обязательно используем функцию setTodos, вместо изменения массива напрямую
@@ -222,21 +237,21 @@ function TodoList(props) {
       ...prevTodos,
       {
         id: crypto.randomUUID(),
-        title: title,
+        todo: title,
         completed: false,
       },
     ]);
   };
 
   // Обработчик события переключения статуса задачи
-  const toggleTodo = (id) => {
+  const toggleTask = (id) => {
     setTodos((prevTodos) => prevTodos.map((t) =>
       t.id === id ? { ...t, completed: !t.completed } : t
     ));
   };
 
   // Обработчик события удаления задачи
-  const deleteTodo = (id) => {
+  const deleteTask = (id) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
@@ -245,12 +260,10 @@ function TodoList(props) {
       <h1 className='text-2xl font-bold text-center py-4 bg-gray-100'>{props.title}</h1>
       {todos.length > 0 && (
         <ul className='list-none p-4'>
-          {todos.map((todo) => (
-            <TodoItem key={todo.id} todo={todo} onToggle={toggleTodo} onRemove={deleteTodo} />
-          ))}
+          {todos.map(t => <TodoItem key={t.id} task={t} onToggle={toggleTask} onRemove={deleteTask} />)}
         </ul>
       )}
-      <TodoForm onSubmit={addTodo} />
+      <TodoForm onSubmit={addTask} />
     </div>
   );
 }
@@ -274,7 +287,7 @@ const taskReducer = (todos, action) => {
         ...todos,
         {
           id: crypto.randomUUID(),
-          title: action.title,
+          todo: action.title,
           completed: false,
         },
       ];
@@ -299,23 +312,23 @@ function TodoList(props) {
   const [todos, dispatch] = useReducer(taskReducer, []);
 
   useEffect(() => {
-    fetch('https://dummyapi.online/api/todos')
+    fetch('https://dummyjson.com/todos')
       .then((response) => response.json())
       .then((data) => {
-        dispatch({ type: 'set', todos: data.slice(0, 10) });
+        dispatch({ type: 'set', todos: data.todos.slice(0, 10) });
       });
   }, []);
 
-  const addTodo = (title) => {
+  const addTask = (title) => {
     if (!title) return;
     dispatch({ type: 'add', title });
   };
 
-  const toggleTodo = (id) => {
+  const toggleTask = (id) => {
     dispatch({ type: 'toggle', id });
   };
 
-  const deleteTodo = (id) => {
+  const deleteTask = (id) => {
     dispatch({ type: 'delete', id });
   };
 
@@ -333,40 +346,25 @@ export default TodoItem;
 ## TodoItem.jsx
 
 ```jsx
-function TodoItem({ todo, onToggle, onRemove }) {
+function TodoItem({ task, onToggle, onRemove }) {
   // Обработчик события изменения статуса задачи
-  const toggleTodo = () => onToggle(todo.id);
+  const toggleTask = () => onToggle(task.id);
 
   // Обработчик события удаления задачи
-  const deleteTodo = (e) => {
+  const deleteTask = (e) => {
     // Добавляем, чтобы обрабатывался именно клик на кнопке удаления, а не на всем элементе списка
     e.stopPropagation();
 
     // Отправляем id удаляемого элемента в метод родительского компонента
-    onRemove(todo.id);
+    onRemove(task.id);
   };
 
   return (
-    <li className='flex items-center mb-2 hover:cursor-pointer' onClick={toggleTodo}>
-      <input type='checkbox' className='mr-2' checked={todo.completed} readOnly />
-      <span className={todo.completed ? 'line-through' : ''}>{todo.title}</span>
-      <div className='ml-auto'>
-        <button className='text-gray-400 hover:text-gray-600' onClick={deleteTodo}>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            strokeWidth='1.5'
-            stroke='currentColor'
-            className='w-6 h-6'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              d='M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0'
-            />
-          </svg>
-        </button>
+    <li className='flex items-center mb-2 hover:cursor-pointer' onClick={toggleTask}>
+      <input type='checkbox' className='mr-2' checked={task.completed} readOnly />
+      <span className={todo.completed ? 'line-through' : ''}>{task.title}</span>
+      <div class="ml-auto text-gray-400 hover:text-gray-600">
+        <button class="i-heroicons-trash w-6 h-6" onClick={deleteTask} />
       </div>
     </li>
   );
@@ -385,7 +383,7 @@ export default TodoItem;
     const [counter, setCounter] = useState(1)
     ```
 
-Обратите внимание, что мы разложили входные параметры (`props`), для удобства использования в коде (`todo.title` вместо `props.todo.title` и т. д.).
+Обратите внимание, что мы разложили входные параметры (`props`), для удобства использования в коде (`task.title` вместо `props.task.title` и т. д.).
 
 ## TodoForm.jsx
 
@@ -397,7 +395,7 @@ function TodoForm(props) {
   const inputRef = useRef(null);
 
   // Обработчик события добавления новой задачи
-  const addTodo = () => {
+  const addTask = () => {
     // Передаем введённый в поле текст далее, родительскому компоненту
     props.onSubmit(inputRef.current.value);
 
@@ -417,7 +415,7 @@ function TodoForm(props) {
         />
         <button
           className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md'
-          onClick={addTodo}
+          onClick={addTask}
         >
           Добавить
         </button>
