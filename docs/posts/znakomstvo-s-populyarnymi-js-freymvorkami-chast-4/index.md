@@ -38,10 +38,10 @@ tags:
     npm create vite@latest preact-todo -- --template preact
     ```
 
-    Теперь перейдите в созданную папку `preact-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `preact-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    npm i -D tailwindcss@next @tailwindcss/vite@next
+    npm i -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-pnpm: pnpm"
@@ -49,10 +49,10 @@ tags:
     pnpm create vite preact-todo --template preact
     ```
 
-    Теперь перейдите в созданную папку `preact-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `preact-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    pnpm add -D tailwindcss@next @tailwindcss/vite@next
+    pnpm add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-yarn: Yarn"
@@ -60,10 +60,10 @@ tags:
     yarn create vite preact-todo --template preact
     ```
 
-    Теперь перейдите в созданную папку `preact-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `preact-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    yarn add -D tailwindcss@next @tailwindcss/vite@next
+    yarn add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-bun: Bun"
@@ -71,29 +71,46 @@ tags:
     bun create vite preact --template preact
     ```
 
-    Теперь перейдите в созданную папку `preact-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `preact-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    bun add -D tailwindcss@next @tailwindcss/vite@next
+    bun add -D unocss @iconify-json/heroicons
     ```
 
 и обновите `vite.config.js`:
 
 ```js
 import { defineConfig } from 'vite'
+import UnoCSS from 'unocss/vite'
 import preact from '@preact/preset-vite'
-import tailwindcss from '@tailwindcss/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [preact(), tailwindcss()],
+  plugins: [UnoCSS(), preact()],
 })
 ```
 
-В файл `src/index.css` замените всё содержимое на следующий код:
+Добавьте `uno.config.js`:
 
-```css
-@import "tailwindcss";
+```js
+import { defineConfig, presetIcons, presetWind4 } from 'unocss'
+
+export default defineConfig({
+  presets: [
+    presetWind4(),
+    presetIcons(),
+  ],
+})
+```
+
+Обновите `src/main.jsx`:
+
+```jsx
+import { render } from 'preact'
+import App from './app.jsx'
+import 'virtual:uno.css'
+
+render(<App />, document.getElementById('app'))
 ```
 
 Не забудьте добавить класс `bg-gray-200` элементу `body` в файле `index.html`, чтобы у страницы был серый фон.
@@ -152,15 +169,15 @@ function TodoList(props) {
 
   // Подгружаем задачи с сервера при загрузке страницы
   useEffect(() => {
-    fetch('https://dummyapi.online/api/todos')
+    fetch('https://dummyjson.com/todos')
       .then((response) => response.json())
       .then((data) => {
-        setTodos(data.slice(0, 10));
+        setTodos(data.todos.slice(0, 10));
       });
   }, []);
 
   // Добавляем задачу в массив, если у нее есть заголовок
-  const addTodo = (title) => {
+  const addTask = (title) => {
     if (!title) return;
 
     const id = Math.max(...todos.map((obj) => obj.id));
@@ -169,21 +186,21 @@ function TodoList(props) {
       ...prevTodos,
       {
         todos.length ? id + 1 : 1,
-        title: title,
+        todo: title,
         completed: false,
       },
     ]);
   };
 
   // Меняем статус задачи
-  const toggleTodo = (id) => {
+  const toggleTask = (id) => {
     setTodos((prevTodos) => prevTodos.map((t) =>
       t.id === id ? { ...t, completed: !t.completed } : t
     ));
   };
 
   // Удаляем задачу
-  const deleteTodo = (id) => {
+  const deleteTask = (id) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
@@ -193,12 +210,10 @@ function TodoList(props) {
       <h1 class='text-2xl font-bold text-center py-4 bg-gray-100'>{props.title}</h1>
       {todos.length > 0 && (
         <ul class='list-none p-4'>
-          {todos.map((todo) => (
-            <TodoItem key={todo.id} todo={todo} onToggle={toggleTodo} onRemove={deleteTodo} />
-          ))}
+          {todos.map(t => <TodoItem key={t.id} task={t} onToggle={toggleTask} onRemove={deleteTask} />)}
         </ul>
       )}
-      <TodoForm onSubmit={addTodo} />
+      <TodoForm onSubmit={addTask} />
     </div>
   );
 }
@@ -213,33 +228,18 @@ export default TodoList;
 Здесь мы вообще никаких хуков не используем, а просто принимаем из родительского компонента _объект задачи_, _функцию переключения_ и _функцию удаления_ в качестве параметров (`props`):
 
 ```jsx
-function TodoItem({ todo, onToggle, onRemove }) {
+function TodoItem({ task, onToggle, onRemove }) {
   // Обработчик переключения статуса задачи
-  const toggleTodo = () => onToggle(todo.id);
+  const toggleTask = () => onToggle(task.id);
   // Обработчик удаления задачи
-  const deleteTodo = () => onRemove(todo.id);
+  const deleteTask = () => onRemove(task.id);
 
   return (
-    <li class='flex items-center mb-2 hover:cursor-pointer' onClick={toggleTodo}>
-      <input type='checkbox' class='mr-2' checked={todo.completed} readOnly />
-      <span class={todo.completed ? 'line-through' : ''}>{todo.title}</span>
-      <div class='ml-auto'>
-        <button class='text-gray-400 hover:text-gray-600' onClick={deleteTodo}>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            stroke-width='1.5'
-            stroke='currentColor'
-            class='w-6 h-6'
-          >
-            <path
-              stroke-linecap='round'
-              stroke-linejoin='round'
-              d='M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0'
-            />
-          </svg>
-        </button>
+    <li class='flex items-center mb-2 hover:cursor-pointer' onClick={toggleTask}>
+      <input type='checkbox' class='mr-2' checked={task.completed} readOnly />
+      <span class={task.completed ? 'line-through' : ''}>{task.title}</span>
+      <div class="ml-auto text-gray-400 hover:text-gray-600">
+        <button class="i-heroicons-trash w-6 h-6" onClick={deleteTask} />
       </div>
     </li>
   );
@@ -258,7 +258,7 @@ function TodoForm(props) {
   const inputRef = useRef(null);
 
   // Обработчик добавления новой задачи
-  const addTodo = () => {
+  const addTask = () => {
     props.onSubmit(inputRef.current.value);
     inputRef.current.value = '';
     inputRef.current.focus();
@@ -268,7 +268,7 @@ function TodoForm(props) {
   const handleKeyDown = (e) => {
     if (e.keyCode !== 13) return;
 
-    addTodo();
+    addTask();
   };
 
   return (
@@ -284,7 +284,7 @@ function TodoForm(props) {
         />
         <button
           class='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md'
-          onClick={addTodo}
+          onClick={addTask}
         >
           Добавить
         </button>
@@ -334,9 +334,9 @@ todos.value = 'новое значение';
 
 ```js
 useSignalEffect(() => {
-  fetch('https://dummyapi.online/api/todos')
+  fetch('https://dummyjson.com/todos')
     .then((response) => response.json())
-    .then((data) => (todos.value = data.slice(0, 10)));
+    .then((data) => (todos.value = data.todos.slice(0, 10)));
 });
 ```
 
@@ -351,12 +351,12 @@ function TodoList(props) {
   const todos = useSignal([]);
 
   useSignalEffect(() => {
-    fetch('https://dummyapi.online/api/todos')
+    fetch('https://dummyjson.com/todos')
       .then((response) => response.json())
-      .then((data) => (todos.value = data.slice(0, 10)));
+      .then((data) => (todos.value = data.todos.slice(0, 10)));
   });
 
-  const addTodo = (title) => {
+  const addTask = (title) => {
     if (!title) return;
 
     const id = Math.max(...todos.value.map((obj) => obj.id));
@@ -365,13 +365,13 @@ function TodoList(props) {
       ...todos.value,
       {
         id: id + 1,
-        title: title,
+        todo: title,
         completed: false,
       },
     ];
   };
 
-  const toggleTodo = (id) => {
+  const toggleTask = (id) => {
     const index = todos.value.findIndex((todo) => todo.id === id);
 
     if (index === -1) return;
@@ -383,7 +383,7 @@ function TodoList(props) {
     ];
   };
 
-  const deleteTodo = (id) => {
+  const deleteTask = (id) => {
     todos.value = todos.value.filter((todo) => todo.id !== id);
   };
 
@@ -392,12 +392,10 @@ function TodoList(props) {
       <h1 class='text-2xl font-bold text-center py-4 bg-gray-100'>{props.title}</h1>
       {todos.value.length > 0 && (
         <ul class='list-none p-4'>
-          {todos.value.map((todo) => (
-            <TodoItem key={todo.id} todo={todo} onToggle={toggleTodo} onRemove={deleteTodo} />
-          ))}
+          {todos.value.map(t => <TodoItem key={t.id} task={t} onToggle={toggleTask} onRemove={deleteTask} />)}
         </ul>
       )}
-      <TodoForm onSubmit={addTodo} />
+      <TodoForm onSubmit={addTask} />
     </div>
   );
 }
@@ -434,7 +432,7 @@ function ExampleComponent() {
 
 !!! note "Примечание"
 
-    Здесь прослеживается аналогия с [`ref`](https://v3.ru.vuejs.org/ru/guide/reactivity-fundamentals.html#%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B0%D0%B2%D1%82%D0%BE%D0%BD%D0%BE%D0%BC%D0%BD%D1%8B%D1%85-%D1%81%D1%81%D1%8B%D0%BB%D0%BE%D0%BA-%D0%BD%D0%B0-%D1%80%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B5-%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D1%8F) и [`computed`](https://v3.ru.vuejs.org/ru/guide/reactivity-computed-watchers.html#%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D1%8F%D0%B5%D0%BC%D1%8B%D0%B5-%D1%81%D0%B2%D0%BE%D0%B8%D1%81%D1%82%D0%B2%D0%B0) из Vue.js
+    Здесь прослеживается аналогия с [`ref`](https://vuejs.dragomano.ru/api/reactivity-core.html#ref) и [`computed`](https://vuejs.dragomano.ru/api/reactivity-core.html#computed) из Vue.js
 
 !!! note "Примечание"
 
@@ -442,7 +440,7 @@ function ExampleComponent() {
 
 ## Документация
 
-Если вы заинтересовались Preact, загляните на [этот сайт](https://preactjs.com/guide/v10/getting-started) (в меню можно выбрать русский язык).
+Если вы заинтересовались Preact, загляните на [этот сайт](https://preactjs.com/guide/v10/getting-started).
 
 ## Заключение
 
@@ -456,4 +454,9 @@ function ExampleComponent() {
 
 ---
 
+<div class="grid cards" markdown>
 [Скачать готовый проект](https://gitlab.com/dragomano/preact-todo){ .md-button .md-button--primary }
+
+[Скачать готовый проект (Preact + Signals)](https://gitlab.com/dragomano/preact-signals-todo){ .md-button }
+
+</div>
