@@ -51,10 +51,10 @@ tags:
     npm i alpinejs
     ```
 
-    Теперь перейдите в созданную папку `alpine-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `alpine-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    npm i -D tailwindcss@next @tailwindcss/vite@next
+    npm i -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-pnpm: pnpm"
@@ -63,10 +63,10 @@ tags:
     pnpm add alpinejs
     ```
 
-    Теперь перейдите в созданную папку `alpine-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `alpine-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    pnpm add -D tailwindcss@next @tailwindcss/vite@next
+    pnpm add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-yarn: Yarn"
@@ -75,10 +75,10 @@ tags:
     yarn add alpinejs
     ```
 
-    Теперь перейдите в созданную папку `alpine-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `alpine-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    yarn add -D tailwindcss@next @tailwindcss/vite@next
+    yarn add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-bun: Bun"
@@ -87,32 +87,39 @@ tags:
     bun add alpinejs
     ```
 
-    Теперь перейдите в созданную папку `alpine-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `alpine-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    bun add -D tailwindcss@next @tailwindcss/vite@next
+    bun add -D unocss @iconify-json/heroicons
     ```
 
 и обновите `vite.config.js`:
 
 ```js
 import { defineConfig } from 'vite'
-import tailwindcss from '@tailwindcss/vite';
+import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
-  plugins: [tailwindcss()],
+  plugins: [UnoCSS()],
 })
 ```
 
 Скрипт будет проверять файл `index.html`, а также любые `js` файлы в папке `src` и подгружать определения только тех CSS-классов, которые обнаружатся в этих файлах.
 
-Не забудьте в директории `src` создать файл `style.css`. Он будет содержать импорты классов Tailwind:
+Добавьте `uno.config.js`:
 
-```css
-@import "tailwindcss";
+```js
+import { defineConfig, presetIcons, presetWind4 } from 'unocss'
+
+export default defineConfig({
+  presets: [
+    presetWind4(),
+    presetIcons(),
+  ],
+})
 ```
 
-Вообще, создавать сложные компоненты в Alpine.js дело неблагодарное. Вы можете либо писать все свои скрипты внутри тега `script` в HTML-файлах, либо создавать отдельные файлы с разделением в зависимости от целей и задач. Сторонние плагины рассматривать не будем. Выберем 2 вариант и создадим файл `todos.js` в папке `src`:
+Вообще, создавать сложные компоненты в Alpine.js дело неблагодарное. Вы можете либо писать все свои скрипты внутри тега `script` в HTML-файлах, либо создавать отдельные файлы с разделением в зависимости от целей и задач. Сторонние плагины рассматривать не будем. Выберем второй вариант и создадим файл `todos.js` в папке `src`:
 
 ```js
 export default function todos() {
@@ -124,7 +131,7 @@ export default function todos() {
 
 ```js
 import Alpine from 'alpinejs';
-import './style.css';
+import 'virtual:uno.css'
 import todos from './todos';
 
 Alpine.data('todos', todos);
@@ -193,17 +200,19 @@ export default function todos() {
 }
 ```
 
-Внутри этой переменной будут храниться объекты задач. Почему объекты? Потому что с ними проще работать. Ведь у каждой задачи должны быть заголовок и статус. Можно было бы заполнить `todos` объектами задач-примеров вручную, но мы ведь люди ленивые, а потому воспользуемся готовым [JSON-сервером](https://dummyapi.online/api/todos), как раз предназначенным для тестирования и разработки подобного рода вещей.
+Внутри этой переменной будут храниться объекты задач. Почему объекты? Потому что с ними проще работать. Ведь у каждой задачи должны быть заголовок и статус. Можно было бы заполнить `todos` объектами задач-примеров вручную, но мы ведь люди ленивые, а потому воспользуемся готовым [JSON-сервером](https://jsonplaceholder.typicode.com/todos), как раз предназначенным для тестирования и разработки подобного рода вещей.
 
-Нам потребуется создать метод для получения списка задач и сохранения его в переменной `todos`:
+Нам потребуется создать метод для получения списка задач и сохранения его в переменной `todos`.
+
+Чтобы не загромождать страницу 200 задачами, предоставляемыми сервером, берем первые 10. Для наших целей этого будет вполне достаточно:
 
 ```js
 export default function todos() {
   return {
     todos: [],
 
-    fetchTodos: function () {
-      fetch('https://dummyapi.online/api/todos')
+    fetchTasks: function () {
+      fetch('https://jsonplaceholder.typicode.com/todos')
         .then((response) => response.json())
         .then((data) => {
           this.todos = data.slice(0, 10);
@@ -213,44 +222,29 @@ export default function todos() {
 }
 ```
 
-Чтобы не загромождать страницу 200 задачами, предоставляемыми сервером, берем первые 10. Для наших целей этого будет вполне достаточно. Теперь настроим выполнение этого метода при обновлении страницы. Для этого в Alpine.js можно использовать директиву `x-init`:
+Теперь настроим выполнение этого метода при обновлении страницы. Для этого в Alpine.js можно использовать директиву `x-init`:
 
 ```html
 <div
   class="max-w-sm md:max-w-lg mx-auto my-10 bg-white rounded-md shadow-md overflow-hidden"
   x-data="todos()"
-  x-init="fetchTodos()"
+  x-init="fetchTasks()"
 ></div>
 ```
 
 !!! note "Примечание"
 
-    Можно не указывать директиву `x-init` в разметке, а просто определить функцию `init`, возвращающую метод `this.fetchTodos()` в используемом объекте данных.
+    Можно не указывать директиву `x-init` в разметке, а просто определить функцию `init`, возвращающую метод `this.fetchTasks()` в используемом объекте данных.
 
-Можете с помощью `console.log` убедиться, что в переменной `this.todos` теперь находится список из 10 задач. Осталось заменить наши 5 задач-примеров на эти получаемые 10 задач. Но как? Мы же не будем вручную добавлять 10 одинаковых блоков с задачами в разметку, а потом получать для каждого данные из массива `todos`? Разумеется, нет. Для этого в JS используются циклы. Уберем из нашей разметки все элементы `li`, кроме одного, а затем обернём его тегом `template`:
+С помощью `console.log` можно убедиться, что в переменной `this.todos` теперь находится список из 10 задач. Осталось заменить наши 5 задач-примеров на эти получаемые 10 задач. Но как? Мы же не будем вручную добавлять 10 одинаковых блоков с задачами в разметку, а потом получать для каждого данные из массива `todos`? Разумеется, нет. Для этого в JS используются циклы. Уберем из нашей разметки все элементы `li`, кроме одного, а затем обернём его тегом `template`:
 
 ```html
 <template x-for="todo in todos" :key="todo.id">
   <li class="flex items-center mb-2 hover:cursor-pointer">
     <input type="checkbox" class="mr-2" checked />
     <span class="line-through">Вымыть пол</span>
-    <div class="ml-auto">
-      <button class="text-gray-400 hover:text-gray-600">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-          />
-        </svg>
-      </button>
+    <div class="ml-auto text-gray-400 hover:text-gray-600">
+      <button class="i-heroicons-trash w-6 h-6" />
     </div>
   </li>
 </template>
@@ -266,14 +260,14 @@ export default function todos() {
 
     В тех редких случаях, когда в используемых данных нет уникальных значений типа идентификатора, можно использовать индекс, генерируемый циклом. Например: `<template x-for="(todo, index) in todos" :key="index">`
 
-Далее, реализуем метод `toggleTodo` для переключения статуса задачи при клике на элементе списка, и привяжем этот статус к элементу `input type="checkbox"`:
+Далее, реализуем метод `toggleTask` для переключения статуса задачи при клике на элементе списка, и привяжем этот статус к элементу `input type="checkbox"`:
 
 ```js
 export default function todos() {
   return {
     // ...
 
-    toggleTodo: function (id) {
+    toggleTask: function (id) {
       this.todos = this.todos.map((t) =>
         t.id === id ? { ...t, completed: !t.completed } : t,
       );
@@ -283,12 +277,12 @@ export default function todos() {
 ```
 
 ```html
-<li class="flex items-center mb-2 hover:cursor-pointer" @click="toggleTodo(todo.id)">
+<li class="flex items-center mb-2 hover:cursor-pointer" @click="toggleTask(todo.id)">
   <input type="checkbox" class="mr-2" :checked="todo.completed" />
 </li>
 ```
 
-Атрибут `@click="toggleTodo(todo.id)"` у элемента `li` отвечает за вызов метода `toogleTodo` при клике на элементе списка.
+Атрибут `@click="toggleTask(todo.id)"` у элемента `li` отвечает за вызов метода `toogleTodo` при клике на элементе списка.
 
 !!! note "Примечание"
 
@@ -302,10 +296,10 @@ export default function todos() {
 
 Готово, теперь у каждой задачи свой заголовок и статус. Попробуйте. При нажатии на любой пункт в списке происходит поиск элемента с выбранным `id` среди объектов в массиве `todos`, а затем переключение свойства `completed` у найденного объекта.
 
-А как насчёт удаления? Добавим атрибут `@click` и метод `deleteTodo` для соответствующей кнопки:
+А как насчёт удаления? Добавим атрибут `@click` и метод `deleteTask` для соответствующей кнопки:
 
 ```html
-<button class="text-gray-400 hover:text-gray-600" @click="deleteTodo(todo.id)"></button>
+<button class="text-gray-400 hover:text-gray-600" @click="deleteTask(todo.id)"></button>
 ```
 
 ```js
@@ -313,7 +307,7 @@ export default function todos() {
   return {
     // ...
 
-    deleteTodo: function (id) {
+    deleteTask: function (id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
     },
   };
@@ -322,25 +316,28 @@ export default function todos() {
 
 Как видите, мы не удаляем задачи, а просто фильтруем их.
 
-Осталось реализовать добаление задач. Для этого добавим атрибуты `x-ref` и `x-model` к элементу `input type="text"`, а также создадим метод `addTodo` и привяжем его к кнопке «Добавить»:
+Осталось реализовать добаление задач. Для этого добавим атрибуты `x-ref` и `x-model` к элементу `input type="text"`, а также создадим метод `addTask` и привяжем его к кнопке «Добавить»:
 
 ```html
 <div class="flex items-center">
   <input
-    x-ref="newTodo"
+    x-ref="newTask"
     x-model="inputValue"
     type="text"
     class="flex-1 mr-2 py-2 px-4 rounded-md border border-gray-300"
     placeholder="Новая задача"
     autofocus
   />
-  <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md" @click="addTodo()">
+  <button
+    class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md"
+    @click="addTask()"
+  >
     Добавить
   </button>
 </div>
 ```
 
-`x-ref="newTodo"` нужен для удобного обращения к этому элементу, чтобы не искать его через `document.querySelector('input type="text"')`, а `x-model` своего рода _синтаксический сахар_ для замены конструкции вида `name="inputValue" @input="inputValue = $event.target.value"`:
+`x-ref="newTask"` нужен для удобного обращения к этому элементу, чтобы не искать его через `document.querySelector('input type="text"')`, а `x-model` своего рода _синтаксический сахар_ для замены конструкции вида `name="inputValue" @input="inputValue = $event.target.value"`:
 
 ```js
 export default function todos() {
@@ -350,9 +347,9 @@ export default function todos() {
 
     // ...
 
-    addTodo: function () {
+    addTask: function () {
       if (!this.inputValue) {
-        this.$refs.newTodo.focus();
+        this.$refs.newTask.focus();
         return;
       }
 
@@ -366,13 +363,13 @@ export default function todos() {
       ];
 
       this.inputValue = '';
-      this.$refs.newTodo.focus();
+      this.$refs.newTask.focus();
     },
   };
 }
 ```
 
-С помощью выражения `this.$refs.newTodo.focus();` мы фокусируемся на поле для ввода заголовка новой задачи после добавления, чтобы лишний раз не кликать мышкой — на случай, если хотим добавить несколько задач подряд. После этого в массив `todos` пушим новый объект и очищаем поле `inputValue`.
+С помощью выражения `this.$refs.newTask.focus();` мы фокусируемся на поле для ввода заголовка новой задачи после добавления, чтобы лишний раз не кликать мышкой — на случай, если хотим добавить несколько задач подряд. После этого в массив `todos` пушим новый объект и очищаем поле `inputValue`.
 
 Последний штрих - будем отображать наш список только когда он содержит задачи. В этом нам поможет директива `x-show`:
 
