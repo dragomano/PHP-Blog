@@ -38,10 +38,10 @@ tags:
     npm create vite@latest solid-todo -- --template solid
     ```
 
-    Теперь перейдите в созданную папку `solid-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `solid-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    npm i -D tailwindcss@next @tailwindcss/vite@next
+    npm i -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-pnpm: pnpm"
@@ -49,10 +49,10 @@ tags:
     pnpm create vite solid-todo --template solid
     ```
 
-    Теперь перейдите в созданную папку `solid-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `solid-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    pnpm add -D tailwindcss@next @tailwindcss/vite@next
+    pnpm add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-yarn: Yarn"
@@ -60,10 +60,10 @@ tags:
     yarn create vite solid-todo --template solid
     ```
 
-    Теперь перейдите в созданную папку `solid-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `solid-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    yarn add -D tailwindcss@next @tailwindcss/vite@next
+    yarn add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-bun: Bun"
@@ -71,33 +71,52 @@ tags:
     bun create vite solid --template solid
     ```
 
-    Теперь перейдите в созданную папку `solid-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `solid-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    bun add -D tailwindcss@next @tailwindcss/vite@next
+    bun add -D unocss @iconify-json/heroicons
     ```
 
 и обновите `vite.config.js`:
 
 ```js
 import { defineConfig } from 'vite'
+import UnoCSS from 'unocss/vite'
 import solid from 'vite-plugin-solid'
-import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  plugins: [solid(), tailwindcss()],
+  plugins: [UnoCSS(), solid()],
 })
 ```
 
-В файл `src/index.css` замените всё содержимое на следующий код:
+Добавьте `uno.config.js`:
 
-```css
-@import "tailwindcss";
+```js
+import { defineConfig, presetIcons, presetWind4 } from 'unocss'
+
+export default defineConfig({
+  presets: [
+    presetWind4(),
+    presetIcons(),
+  ],
+})
 ```
 
 `App.css` можно удалить, он нам не нужен.
 
-Файл `src/index.jsx` оставляем без изменений.
+Обновите `src/index.jsx`:
+
+```jsx
+/* @refresh reload */
+import { render } from 'solid-js/web'
+
+import 'virtual:uno.css'
+import App from './App'
+
+const root = document.getElementById('root')
+
+render(() => <App />, root)
+```
 
 Файл `src/App.jsx`:
 
@@ -158,7 +177,7 @@ export default TodoList;
 
 Здесь мы с помощью `createSignal` (аналог `useState` в React, или `useSignal` в Preact) определяем две функции — `todos` и `setTodos`. Первая будет возвращать список задач, а вторая — обновлять этот список.
 
-Получать список текущих задач мы, как и раньше, будем с сервера `https://dummyapi.online/api/todos`, с использованием хука жизненного цикла `onMount` — не забудьте импортировать его из `solid-js`:
+Получать список текущих задач мы, как и раньше, будем с сервера `https://dummyjson.com/todos`, с использованием хука жизненного цикла `onMount` — не забудьте импортировать его из `solid-js`:
 
 ```jsx
 import { onMount } from "solid-js";
@@ -168,9 +187,9 @@ function TodoList(props) {
   const [store, setStore] = createStore({ todos: [] });
 
   onMount(() => {
-    fetch('https://dummyapi.online/api/todos')
+    fetch('https://dummyjson.com/todos')
       .then(response => response.json())
-      .then(data => setStore('todos', data.slice(0, 10)))
+      .then(data => setStore('todos', data.todos.slice(0, 10)))
   })
 
   // ...
@@ -189,29 +208,27 @@ function TodoList(props) {
   const [store, setStore] = createStore({ todos: [] });
 
   onMount(() => {
-    fetch('https://dummyapi.online/api/todos')
+    fetch('https://dummyjson.com/todos')
       .then(response => response.json())
-      .then(data => setStore('todos', data.slice(0, 10)))
+      .then(data => setStore('todos', data.todos.slice(0, 10)))
   })
 
   // Заготовки для методов действий, которые определим позже
-  const addTodo = (title) => {};
+  const addTask = (title) => {};
 
-  const toggleTodo = (id) => {};
+  const toggleTask = (id) => {};
 
-  const deleteTodo = (id) => {};
+  const deleteTask = (id) => {};
 
   return (
     <div class='max-w-sm md:max-w-lg mx-auto my-10 bg-white rounded-md shadow-md overflow-hidden'>
       <h1 class='text-2xl font-bold text-center py-4 bg-gray-100'>{props.title}</h1>
       <ul class='list-none p-4'>
         <For each={store.todos}>
-          {(todo) => (
-            <TodoItem key={todo.id} todo={todo} onToggle={toggleTodo} onRemove={deleteTodo} />
-          )}
+          {t => <TodoItem key={t.id} task={t} onToggle={toggleTask} onRemove={deleteTask} />}
         </For>
       </ul>
-      <TodoForm onSubmit={addTodo} />
+      <TodoForm onSubmit={addTask} />
     </div>
   );
 }
@@ -224,17 +241,17 @@ export default TodoList;
 Осталось реализовать методы управления задачами (добавление, переключение статуса и удаление), которые мы будем передавать в компоненты `TodoItem` и `TodoForm`, соответственно:
 
 ```jsx
-const addTodo = (title) => {
+const addTask = (title) => {
   if (!title) return;
 
   setStore('todos', (todos) => [...todos, { id: crypto.randomUUID(), title, completed: false }]);
 }
 
-const toggleTodo = (id) => {
+const toggleTask = (id) => {
   setStore('todos', (t) => t.id === id, 'completed', (completed) => !completed);
 };
 
-const deleteTodo = (id) => {
+const deleteTask = (id) => {
   setStore('todos', (t) => t.filter((t) => t.id !== id))
 }
 ```
@@ -253,13 +270,11 @@ return (
     {length() > 0 && (
       <ul class='list-none p-4'>
         <For each={store.todos}>
-          {(todo) => (
-            <TodoItem key={todo.id} todo={todo} onToggle={toggleTodo} onRemove={deleteTodo} />
-          )}
+          {t => <TodoItem key={t.id} task={t} onToggle={toggleTask} onRemove={deleteTask} />}
         </For>
       </ul>
     )}
-    <TodoForm onSubmit={addTodo} />
+    <TodoForm onSubmit={addTask} />
   </div>
 );
 ```
@@ -271,31 +286,16 @@ return (
 Обратите внимание на разметку. Solid, хоть и похож на React, но не требует написания `className` вместо `class`, а также имеет некоторые специальные атрибуты JSX (например, `classList`, позволяющий обойтись без внешних библиотек типа `clx`).
 
 ```jsx
-function TodoItem({ todo, onToggle, onRemove }) {
-  const toggleTodo = () => onToggle(todo.id);
-  const deleteTodo = () => onRemove(todo.id);
+function TodoItem({ task, onToggle, onRemove }) {
+  const toggleTask = () => onToggle(task.id);
+  const deleteTask = () => onRemove(task.id);
 
   return (
-    <li class='flex items-center mb-2 hover:cursor-pointer' onClick={toggleTodo}>
-      <input type='checkbox' class='mr-2' checked={todo.completed} readOnly />
-      <span classList={{ 'line-through': todo.completed }}>{todo.title}</span>
-      <div class='ml-auto'>
-        <button class='text-gray-400 hover:text-gray-600' onClick={deleteTodo}>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            strokeWidth='1.5'
-            stroke='currentColor'
-            class='w-6 h-6'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              d='M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0'
-            />
-          </svg>
-        </button>
+    <li class='flex items-center mb-2 hover:cursor-pointer' onClick={toggleTask}>
+      <input type='checkbox' class='mr-2' checked={task.completed} readOnly />
+      <span classList={{ 'line-through': task.completed }}>{task.title}</span>
+      <div class="ml-auto text-gray-400 hover:text-gray-600">
+        <button class="i-heroicons-trash w-6 h-6" onClick={deleteTask} />
       </div>
     </li>
   );
@@ -316,7 +316,7 @@ export default TodoItem;
 function TodoForm(props) {
   let inputRef;
 
-  const addTodo = () => {
+  const addTask = () => {
     // Передаем значение текстового ввода
     props.onSubmit(inputRef.value);
 
@@ -339,7 +339,7 @@ function TodoForm(props) {
         />
         <button
           class='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md'
-          onClick={addTodo}
+          onClick={addTask}
         >
           Добавить
         </button>
