@@ -40,10 +40,10 @@ tags:
     npm create vite@latest vue-todo -- --template vue
     ```
 
-    Теперь перейдите в созданную папку `vue-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `vue-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    npm i -D tailwindcss@next @tailwindcss/vite@next
+    npm i -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-pnpm: pnpm"
@@ -51,10 +51,10 @@ tags:
     pnpm create vite vue-todo --template vue
     ```
 
-    Теперь перейдите в созданную папку `vue-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `vue-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    pnpm add -D tailwindcss@next @tailwindcss/vite@next
+    pnpm add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-yarn: Yarn"
@@ -62,10 +62,10 @@ tags:
     yarn create vite vue-todo --template vue
     ```
 
-    Теперь перейдите в созданную папку `vue-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `vue-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    yarn add -D tailwindcss@next @tailwindcss/vite@next
+    yarn add -D unocss @iconify-json/heroicons
     ```
 
 === ":simple-bun: Bun"
@@ -73,29 +73,46 @@ tags:
     bun create vite vue --template vue
     ```
 
-    Теперь перейдите в созданную папку `vue-todo` и установите `tailwindcss`:
+    Теперь перейдите в созданную папку `vue-todo` и установите [UnoCSS](https://dragomano.github.io/unocss-russian/):
 
     ```bash
-    bun add -D tailwindcss@next @tailwindcss/vite@next
+    bun add -D unocss @iconify-json/heroicons
     ```
 
 и обновите `vite.config.js`:
 
 ```js
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
+import UnoCSS from 'unocss/vite'
 import vue from '@vitejs/plugin-vue'
-import tailwindcss from '@tailwindcss/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue(), tailwindcss()],
+    plugins: [UnoCSS(), vue()],
 });
 ```
 
-В файл `src/style.css` замените всё содержимое на следующий код:
+Добавьте `uno.config.js`:
 
-```css
-@import "tailwindcss";
+```js
+import { defineConfig, presetIcons, presetWind4 } from 'unocss'
+
+export default defineConfig({
+  presets: [
+    presetWind4(),
+    presetIcons(),
+  ],
+})
+```
+
+Обновите `src/main.js`:
+
+```js
+import { createApp } from 'vue'
+import 'virtual:uno.css'
+import App from './App.vue'
+
+createApp(App).mount('#app')
 ```
 
 ## Подготовка основных файлов
@@ -195,17 +212,17 @@ export default defineConfig({
 
   // ...
 
-  const fetchTodos = async () => {
-    await fetch('https://dummyapi.online/api/todos')
+  const fetchTasks = async () => {
+    await fetch('https://dummyjson.com/todos')
       .then((response) => response.json())
       .then((data) => {
         // У переменных ссылок все значения должны записываться в свойство value
-        todos.value = data.slice(0, 10);
+        todos.value = data.todos.slice(0, 10);
       });
   };
 
-  // Выполняем функцию fetchTodos во время монтировани компонента
-  onMounted(fetchTodos);
+  // Выполняем функцию fetchTasks во время монтировани компонента
+  onMounted(fetchTasks);
 
   // ...
 </script>
@@ -216,14 +233,14 @@ export default defineConfig({
 Далее реализуем метод для добавления новой задачи:
 
 ```js
-const addTodo = (title) => {
+const addTask = (title) => {
   if (!title) return;
 
   todos.value = [
     ...todos.value,
     {
       id: crypto.randomUUID(),
-      title: title,
+      todo: title,
       completed: false,
     },
   ];
@@ -233,13 +250,13 @@ const addTodo = (title) => {
 Добавим и методы для переключения статуса и удаления задачи:
 
 ```js
-const toggleTodo = (id) => {
+const toggleTask = (id) => {
   todos.value = todos.value.map((t) =>
     t.id === id ? { ...t, completed: !t.completed } : t,
   );
 };
 
-const deleteTodo = (id) => {
+const deleteTask = (id) => {
   todos.value = todos.value.filter((todo) => todo.id !== id);
 };
 ```
@@ -265,7 +282,7 @@ const deleteTodo = (id) => {
 
   // Вообще-то можно было бы не создавать переменную input и работать со значением текстового элемента через newTodo.value.value, но выглядит не очень красиво
 
-  const addTodo = () => {
+  const addTask = () => {
     // Отправляем из дочернего компонента (то есть отсюда) в родительский введённое значение из элемента `input`, связывая его с событием `submit`
     emit('submit', input.value);
 
@@ -290,7 +307,7 @@ const deleteTodo = (id) => {
       />
       <button
         class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md"
-        @click="addTodo"
+        @click="addTask"
       >
         Добавить
       </button>
@@ -313,7 +330,7 @@ const deleteTodo = (id) => {
   <div class="max-w-sm md:max-w-lg mx-auto my-10 bg-white rounded-md shadow-md overflow-hidden">
     <h1 class="text-2xl font-bold text-center py-4 bg-gray-100">{{ title }}</h1>
     <ul class="list-none p-4" v-show="todos.length"></ul>
-    <TodoForm @submit="addTodo" />
+    <TodoForm @submit="addTask" />
   </div>
 </template>
 ```
@@ -327,37 +344,22 @@ const deleteTodo = (id) => {
 ```html
 <script setup>
   // Определяем входные параметры
-  const props = defineProps({ todo: Object });
+  const props = defineProps({ task: Object });
 
   // Определяем события, которые будем отправлять в родительский компонент
   const emit = defineEmits(['toggle', 'remove']);
 
-  const toggleTodo = () => emit('toggle', props.todo.id);
+  const toggleTask = () => emit('toggle', props.task.id);
 
-  const deleteTodo = () => emit('remove', props.todo.id);
+  const deleteTask = () => emit('remove', props.task.id);
 </script>
 
 <template>
-  <li class="flex items-center mb-2 hover:cursor-pointer" @click="toggleTodo">
-    <input type="checkbox" class="mr-2" :checked="todo.completed" />
-    <span :class="{ 'line-through': todo.completed }" v-text="todo.title"></span>
-    <div class="ml-auto">
-      <button class="text-gray-400 hover:text-gray-600" @click="deleteTodo">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-          />
-        </svg>
-      </button>
+  <li class="flex items-center mb-2 hover:cursor-pointer" @click="toggleTask">
+    <input type="checkbox" class="mr-2" :checked="props.task.completed" />
+    <span :class="{ 'line-through': props.task.completed }" v-text="props.task.todo"></span>
+    <div class="ml-auto text-gray-400 hover:text-gray-600">
+      <button class="i-heroicons-trash w-6 h-6" @click="deleteTask" />
     </div>
   </li>
 </template>
@@ -383,14 +385,14 @@ const deleteTodo = (id) => {
     <h1 class="text-2xl font-bold text-center py-4 bg-gray-100">{{ title }}</h1>
     <ul class="list-none p-4" v-show="todos.length">
       <TodoItem
-        v-for="todo in todos"
-        :key="todo.id"
-        :todo="todo"
-        @toggle="toggleTodo"
-        @remove="deleteTodo"
+        v-for="t in todos"
+        :key="t.id"
+        :task="t"
+        @toggle="toggleTask"
+        @remove="deleteTask"
       />
     </ul>
-    <TodoForm @submit="addTodo" />
+    <TodoForm @submit="addTask" />
   </div>
 </template>
 ```
@@ -403,9 +405,8 @@ const deleteTodo = (id) => {
 
 Если вы заинтересовались Vue, вам пригодится документация:
 
-- [устаревшая (но более приятная глазу) официальная версия](https://v3.ru.vuejs.org)
-- [обновлённая официальная версия](https://ru.vuejs.org)
-- [мой вариант перевода документации](https://vuejs.dragomano.ru)
+- [официальная версия](https://ru.vuejs.org)
+- [мой вариант перевода](https://vuejs.dragomano.ru)
 
 ## Заключение
 
