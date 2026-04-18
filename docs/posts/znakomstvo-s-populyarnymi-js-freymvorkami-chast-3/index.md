@@ -188,8 +188,8 @@ function TodoList(props) {
         <li className="flex items-center mb-2 hover:cursor-pointer">
           <input type="checkbox" className="mr-2" checked>
           <span className="line-through">Вымыть пол</span>
-          <div class="ml-auto text-gray-400 hover:text-gray-600">
-            <button class="i-heroicons-trash w-6 h-6" />
+          <div className="ml-auto text-gray-400 hover:text-gray-600">
+            <button className="i-heroicons-trash w-6 h-6" />
           </div>
         </li>
       </ul>
@@ -363,8 +363,8 @@ function TodoItem({ task, onToggle, onRemove }) {
     <li className='flex items-center mb-2 hover:cursor-pointer' onClick={toggleTask}>
       <input type='checkbox' className='mr-2' checked={task.completed} readOnly />
       <span className={todo.completed ? 'line-through' : ''}>{task.title}</span>
-      <div class="ml-auto text-gray-400 hover:text-gray-600">
-        <button class="i-heroicons-trash w-6 h-6" onClick={deleteTask} />
+      <div className="ml-auto text-gray-400 hover:text-gray-600">
+        <button className="i-heroicons-trash w-6 h-6" onClick={deleteTask} />
       </div>
     </li>
   );
