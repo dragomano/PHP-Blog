@@ -62,7 +62,7 @@ tags:
 | Vue Composition API |                         ☝️                          |                                                  ☝️                                                  |
 | React/Preact        |       `{condition && (<span>Видно?</span>)}`        |                `{condition ? (<span>Видно?</span>)`<br>` : (<span>Не видно!</span>)}`                |
 | Svelte              |      `{#if condition}<span>Видно?</span>{/if}`      |             `{#if condition}<span>Видно?</span>`<br>`{:else}<span>Не видно!</span>{/if}`             |
-| Solid               | `<Show when={condition}><span>Видно?</span></Show>` | `<Switch><Match when={condition}>Видно?</Match><Match when={!condition}>Не видно!</Match></Switch>`  |
+| Solid               | `<Show when={condition}><span>Видно?</span></Show>` |     `<Show when={condition} fallback={() => <span>Не видно!</span>}><span>Видно?</span></Show>`      |
 | Symbiote.js         | `<span ${{'@hidden': '!condition'}}>Видно?</span>`  | `<span ${{'@hidden': '!condition'}}>Видно?</span><span ${{'@hidden': 'condition'}}>Не видно!</span>` |
 
 ### Циклы в разметке
@@ -202,7 +202,7 @@ tags:
 - React: [https://reactdev.ru](https://reactdev.ru)
 - Preact: [https://preactjs.com/guide](https://preactjs.com/guide/v10/getting-started)
 - Svelte: [https://svelte.dragomano.ru](https://svelte.dragomano.ru)
-- Solid: [https://www.solidjs.com/](https://www.solidjs.com/docs/latest/api)
+- Solid: [https://www.solidjs.com/](https://www.solidjs.com/)
 
 ## Заключение
 
