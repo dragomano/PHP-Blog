@@ -9,7 +9,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">&#1057;&#1090;&#1072;&#1090;&#1080;&#1089;&#1090;&#1080;&#1082;&#1072; GitHub &#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1077;&#1083;&#1103; Bugo, Rank: A+</title>
-        <desc id="descId">Всего звёзд: 171, Всего коммитов  (За прошлый год) : 2184, Всего запросов изменений: 631, Всего вопросов: 185, Внесено вклада (за прошлый год): 14</desc>
+        <desc id="descId">Всего звёзд: 172, Всего коммитов  (За прошлый год) : 2199, Всего запросов изменений: 632, Всего вопросов: 186, Внесено вклада (за прошлый год): 15</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -73,7 +73,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 27.996710956949695;
+        stroke-dashoffset: 29.315762816575376;
       }
     }
   
@@ -162,7 +162,7 @@
         x="269.01"
         y="12.5"
         data-testid="stars"
-      >171</text>
+      >172</text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms" transform="translate(25, 0)">
@@ -192,7 +192,7 @@
         x="269.01"
         y="12.5"
         data-testid="prs"
-      >631</text>
+      >632</text>
     </g>
   </g><g transform="translate(0, 75)">
     <g class="stagger" style="animation-delay: 900ms" transform="translate(25, 0)">
@@ -207,7 +207,7 @@
         x="269.01"
         y="12.5"
         data-testid="issues"
-      >185</text>
+      >186</text>
     </g>
   </g><g transform="translate(0, 100)">
     <g class="stagger" style="animation-delay: 1050ms" transform="translate(25, 0)">
@@ -222,7 +222,7 @@
         x="269.01"
         y="12.5"
         data-testid="contribs"
-      >14</text>
+      >15</text>
     </g>
   </g>
     </svg>
