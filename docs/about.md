@@ -31,6 +31,13 @@ search:
     <div>
       <textarea class="md-textarea" name="message" required></textarea>
     </div>
+    <ul class="task-list">
+      <li class="task-list-item">
+        <label class="task-list-control">
+          <input type="checkbox" required><span class="task-list-indicator"></span> Даю согласие на обработку имени и имейла для ответа на обращение
+        </label>
+      </li>
+    </ul>
     <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
     <input type="hidden" name="redirect" value="https://php.dragomano.ru/about">
     <button class="md-button" type="submit">Отправить</button>
