@@ -312,10 +312,6 @@ session.save_path    = "tcp://127.0.0.1:6379"
 - Переименовываем php файл из архива в `index.php` (в OS Panel 5.3.7-) или в `adminer_core.php` (начиная с OS Panel 5.3.8+).
 - Сохраняем по адресу `<Путь к OS Panel>\modules\system\html\openserver\adminer`.
 
-<!-- ### AdminerEvo — наследник _Adminer_
-
-Если вам нравится Adminer и вы регулярно им пользуетесь, то наверняка заметили, что приложение уже давно не обновляется. Однако сообщество своими силами развивает новый проект, основанный на Adminer — [AdminerEvo](https://docs.adminerevo.org). Для обновления достаточно [скачать свежую версию](https://github.com/adminerevo/adminerevo/releases), переименовать и заменить оригинальный файл по адресу `<Путь к OS Panel>\modules\system\html\openserver\adminer`. -->
-
 ![Обновляем версию Adminer](adminer.png)
 
 ## Обновление phpMyAdmin
