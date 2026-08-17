@@ -258,7 +258,7 @@ max_file_uploads   = 3
     php_engine = PHP-8.2
     ```
 
-    Используя плагин [OneClick Login](https://github.com/giofreitas/one-click-login), можно сделать удобный интерфейс для выбора нужной базы данных:
+    Используя плагин [OneClick Login](https://github.com/dragomano/one-click-login/blob/migrate_to_v6/oneclick-login.php), можно добавить удобный интерфейс для выбора нужной базы данных:
 
     ![Adminer с закладками](adminer_bookmarks.png)
 
