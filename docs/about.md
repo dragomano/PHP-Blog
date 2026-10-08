@@ -47,4 +47,4 @@ search:
 
 Проект развивается на энтузиазме автора, любые пожертвования важны и приветствуются.
 
-Поблагодарить можно [чашечкой кофе](https://ko-fi.com/dragomano/) или [донатом на карточку](https://www.tbank.ru/rm/r_LqkuwxVlvl.spMjcXLuTA/UsNvg35786/).
+Благодарности принимаются в виде [доната](https://app.lava.top/dragomano?tabId=donate) или на [карточку](https://www.tbank.ru/rm/r_LqkuwxVlvl.spMjcXLuTA/UsNvg35786/).
