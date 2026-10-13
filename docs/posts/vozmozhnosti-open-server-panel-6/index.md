@@ -8,6 +8,7 @@ links:
   - posts/docker-kak-zamena-open-server/index.md
   - posts/laravel-herd/index.md
   - posts/znakomstvo-s-flyenv/index.md
+  - posts/osp-control/index.md
 tags:
   - OS Panel
   - инструменты
@@ -357,6 +358,8 @@ icon           = code
 Веб-интерфейс нам пока не завезли, но графический интерфейс в версии 6.2.6 уже появился:
 
 ![OSPanel GUI](gui.png)
+
+Для управления окружением из отдельного окна можно попробовать [OSP Control](../osp-control/index.md) — неофициальную надстройку для OSPanel 6. В ней собраны управление сервисами и проектами, просмотр конфигураций и журналов, создание и восстановление резервных копий.
 
 <!-- Также имеется альтернативная [панель управления](https://github.com/delphinpro/oscp/releases).
 
