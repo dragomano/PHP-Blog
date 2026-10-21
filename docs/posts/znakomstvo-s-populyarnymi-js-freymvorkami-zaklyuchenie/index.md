@@ -177,16 +177,16 @@ tags:
 
 |                           Фреймворк/библиотека                           | Размер папки `dist` | Размер `JS` |
 |:------------------------------------------------------------------------:|:-------------------:|------------:|
-|     [Обычный JavaScript](https://gitlab.com/dragomano/vanilla-todo)      |        20 КБ        |     2.77 КБ |
-|            [Preact](https://gitlab.com/dragomano/preact-todo)            |        32 КБ        |    15.77 КБ |
-|             [Solid](https://gitlab.com/dragomano/solid-todo)             |        36 КБ        |    18.94 КБ |
-|   [Preact + Signals](https://gitlab.com/dragomano/preact-signals-todo)   |        40 КБ        |    21.97 КБ |
-|        [Symbiote.js](https://gitlab.com/dragomano/symbiote-todo)         |        40 КБ        |    23.59 КБ |
-|            [Svelte](https://gitlab.com/dragomano/svelte-todo)            |        56 КБ        |    39.13 КБ |
-|          [Alpine.js](https://gitlab.com/dragomano/alpine-todo)           |        68 КБ        |    46.64 КБ |
-| [Vue Composition API](https://gitlab.com/dragomano/vue-composition-todo) |        80 КБ        |    63.69 КБ |
-|         [Vue Options API](https://gitlab.com/dragomano/vue-todo)         |        80 КБ        |    64.30 КБ |
-|             [React](https://gitlab.com/dragomano/react-todo)             |       204 КБ        |   192.39 КБ |
+|     [Обычный JavaScript](https://gitlab.com/dragomano/vanilla-todo)      |        20 КБ        |     2.74 КБ |
+|            [Preact](https://gitlab.com/dragomano/preact-todo)            |        32 КБ        |    15.81 КБ |
+|   [Preact + Signals](https://gitlab.com/dragomano/preact-signals-todo)   |        40 КБ        |    23.34 КБ |
+|        [Symbiote.js](https://gitlab.com/dragomano/symbiote-todo)         |        44 КБ        |    27.08 КБ |
+|            [Svelte](https://gitlab.com/dragomano/svelte-todo)            |        56 КБ        |    39.46 КБ |
+|          [Alpine.js](https://gitlab.com/dragomano/alpine-todo)           |        76 КБ        |    55.63 КБ |
+|             [Solid.js](https://gitlab.com/dragomano/solid-todo)          |        80 КБ        |    65.43 КБ |
+| [Vue Composition API](https://gitlab.com/dragomano/vue-composition-todo) |        84 КБ        |    67.07 КБ |
+|         [Vue Options API](https://gitlab.com/dragomano/vue-todo)         |        84 КБ        |    67.67 КБ |
+|             [React](https://gitlab.com/dragomano/react-todo)             |       236 КБ        |   221.51 КБ |
 
 Разумеется, эти данные относятся всего лишь к нашему демонстрационному проекту, и ваше приложение может оказаться как меньшего, так и гораздо большего размера. С каждым обновлением того или иного фреймворка или библиотеки всё может меняться.
 
