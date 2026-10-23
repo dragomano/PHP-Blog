@@ -76,8 +76,8 @@ tags:
     ```ini
     [project.local]
 
-    php_engine  = PHP-8.4
     http_engine = Apache
+    php_engine  = PHP-8.4
     ```
 
 === "Nginx + PHP"
@@ -85,8 +85,8 @@ tags:
     ```ini
     [project.local]
 
-    php_engine  = PHP-8.4
     http_engine = Nginx
+    php_engine  = PHP-8.4
     ```
 
 === "Apache (без PHP)"
@@ -149,6 +149,10 @@ tags:
 Просто скачиваем нужные версии (с пометкой `-nts-`), останавливаем OS Panel, распаковываем свежие версии поверх старых, запускаем панельку заново.
 
 Распаковывать нужно в соответствующие директории внутри `<Путь к OS Panel>\modules`.
+
+!!! tip "Не хотите заморачиваться?"
+
+    Можете протестировать [OSP Control](../osp-control/index.md), в версии 0.2.0 там добавилась возможность обновлять версии PHP-модулей.
 
 ### Процесс обновления компонентов для версий OS Panel ниже `6.4.0`
 
