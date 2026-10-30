@@ -33,6 +33,11 @@
   color: orange !important;
 }
 
+.md-social__link[title="Лицензия CC BY-NC-SA 4.0"],
+.md-social__link[title="RSS"] {
+  color: var(--md-typeset-a-color) !important;
+}
+
 .form-group {
   display: flex;
   gap: 5px;
