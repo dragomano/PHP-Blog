@@ -48,6 +48,8 @@ theme:
       svelte: simple/svelte
       react: simple/react
       preact: simple/preact
+      rust: simple/rust
+      tauri: simple/tauri
   favicon: images/logo.svg
   font:
     text: Inter
@@ -88,6 +90,8 @@ extra:
     Svelte: svelte
     React: react
     Preact: preact
+    Rust: rust
+    Tauri: tauri
   status:
     new: Недавно добавлена
   social:
