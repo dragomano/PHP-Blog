@@ -206,7 +206,13 @@ Laravel поддерживает SQLite, с хранением базы данн
 ![Пример интерфейса DBngin](dbngin.png#only-light)
 ![Пример интерфейса DBngin](dbngin_dark.png#only-dark)
 
-В качестве альтернативы можно просто установить на один из сайтов Adminer или PHPMyAdmin с нужными для них версиями PHP.
+Кроме того, доступен встроенный AdminerEvo, по адресу `http://database.herd.test/`, базовых возможностей которого хватит за глаза. Но можно его и заменить на сам Adminer, [распаковав и заменив файлы](https://drive.proton.me/urls/F1858QD9H8#8MaYvsQ70Dvu) в `C:\Program Files\Herd\resources\app.asar.unpacked\resources\valet\adminer` и получить уже более обновлённый интерфейс.
+
+!!! info "На заметку"
+
+    Когда-то AdminerEvo появился в качестве замены для переставшего обновляться Adminer. Но потом Adminer опять начал обновляться, и развитие AdminerEvo остановилось.
+
+В качестве альтернативы можно просто установить на один из сайтов Adminer или PHPMyAdmin, чтобы они открывались по адресам вида `adminer.test` или `phpmyadmin.test`.
 
 ## Сравнительная таблица
 
