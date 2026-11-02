@@ -156,6 +156,7 @@ markdown_extensions:
 
 hooks:
   - hooks/fonts.py
+  - hooks/dates.py
 
 plugins:
   - search:
