@@ -25,7 +25,7 @@ search:
 | Ресурс | Особенности |
 | :--- | :--- |
 | [Hcnsec](https://api.hcnsec.cn/sign-up?aff=Pw47) | Дарят средства на баланс каждые сутки, нестабильный доступ к моделям (как и на похожих сайтах) |
-| [TokenHarbor](https://tokenharbor.ai/) | Есть бесплатный тариф и модели, но ваши данные используются для обучения |
+| [TokenHarbor](https://tokenharbor.ai/) | Есть бесплатный тариф и модели, но ваши данные используются для обучения; за 1-2 бакса можно перейти на тариф повыше, где будет предоставлен Agent Pass |
 
 ## ⭐ Достойны внимания
 
@@ -42,6 +42,7 @@ search:
 | :--- | :--- |
 | [Boloto AI](https://t.me/BolotoAI?start=r_365435344) | Покупка подписок и готовых аккаунтов за рубли |
 | [Polza AI](https://polza.ai/?referral=f8C85aRMPd) | Огромный выбор моделей из различных сервисов |
+| [PlusVibeAPI](https://plusvibeapi.ru/?ref=W6RS44PL) | DeepSeek V4 Flash 0731 бесплатно |
 | [AnyModel](https://anymodel.org/?ref=3GMYD4E) | Бонус 5М токенов по ссылке при пополнении счета от 100 рублей |
 | [Tokenator](https://tokenator.cloud/?ref=948a8753) | От 150 руб. в неделю дают ежедневные запросы и 3–4М токенов (GLM 5.3 Flash, GPT-6 Astra, Claude Opus 5.5, MiniMax M3.1 Flash, Gemini 4 Argon), есть комбо-пакеты |
 
@@ -51,7 +52,7 @@ search:
 | :--- | :--- |
 | [OpenCode](https://opencode.ai/ru) | Регулярный доступ к интересным моделям бесплатно |
 | [ZCode](https://zcode.z.ai/en) + [русификатор](https://github.com/xISPx/ZCode_Russifier) | Периодические акции с раздачей токенов для GLM 5.3 и GLM 5.3 Flash |
-| [MiniMax Code](https://agent.minimax.io/about) | Периодические раздачи бесплатных токенов для M3.1 Flash и M3 |
+| [MiniMax Code](https://agent.minimax.io/docs/changelog) | Периодические раздачи бесплатных токенов для M3.1 Flash и M3 |
 
 ## 🔒 VPN
 
@@ -59,3 +60,4 @@ search:
 | :--- | :--- |
 | [ГИК VPN](https://t.me/Gik_VPN_Bot?start=refqcOlebfn) | Скидка 50% на первый месяц |
 | [Liberty VPN](https://proxy-liberty.com/webui/home?referral_to_user_id=365435344) | |
+| [Foxxxy VPN](https://t.me/FoxxxyVPNbot?start=ref_365435344) | Пробный период бесплатно |
