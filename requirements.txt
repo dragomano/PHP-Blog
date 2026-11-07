@@ -1,5 +1,6 @@
 mkdocs-material
 pymdown-extensions
+python-slugify
 mkdocs-minify-plugin
 mkdocs-rss-plugin
 mkdocs-redirects

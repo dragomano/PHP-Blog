@@ -8,6 +8,10 @@ edit_uri: edit/main/docs/
 
 copyright: © Bugo, 2020—2026
 
+validation:
+  links:
+    absolute_links: ignore
+
 theme:
   name: material
   custom_dir: overrides
@@ -128,9 +132,7 @@ markdown_extensions:
       title: Содержание
       permalink: ⚓︎
       permalink_title: Постоянная ссылка
-      slugify: !!python/object/apply:pymdownx.slugs.slugify
-        kwds:
-          case: lower
+      slugify: !!python/name:slugify.slugify
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences:
