@@ -61,3 +61,4 @@ search:
 | [ГИК VPN](https://t.me/Gik_VPN_Bot?start=refqcOlebfn) | Скидка 50% на первый месяц |
 | [Liberty VPN](https://proxy-liberty.com/webui/home?referral_to_user_id=365435344) | |
 | [Foxxxy VPN](https://t.me/FoxxxyVPNbot?start=ref_365435344) | Пробный период бесплатно |
+| [Fly VPN](https://t.me/flylyvpn_bot?start=ref_0b51945f9af04901ae85d93d7366c47f) | +5 дней после оплаты по ссылке |
