@@ -308,11 +308,11 @@ icon           = code
     Общий принцип таков: создаём папку `<Путь к OS Panel 6>\apps\<Папка приложения>` (вместо `apps` можете использовать свое название). Помещаем туда файлы приложения. Затем добавляем секцию приложения в общее меню (через _Настройки - Редактор меню_):
 
     ```ini
-    [Floorp]
+    [Oups]
 
-    caption = Floorp
-    command = "{root_dir}\apps\Floorp\floorp-portable.exe"
-    icon    = firefox
+    caption = Oups
+    command = "{root_dir}\apps\Oups\Oups.exe"
+    icon    = bell
     ```
     Ссылки на некоторые портативные программы можно найти в статье [Обновление компонентов Open Server](../obnovlenie-komponentov-open-server/index.md#dobavlenie-svoikh-portativnykh-programm-vmesto-standartnykh)
 
