@@ -81,35 +81,35 @@ tags:
 
 === ":simple-npm: npm"
     ```bash
-    npm i solid-js@2.0.0-rc.16 @solidjs/web@2.0.0-rc.16
-    npm i -D @solidjs/vite-plugin@3.0.0-next.50
+    npm i solid-js@2.0.0 @solidjs/web@2.0.0
+    npm i -D @solidjs/vite-plugin@3.0.0-next.57
     npm uninstall vite-plugin-solid
     ```
 
 === ":simple-pnpm: pnpm"
     ```bash
-    pnpm add solid-js@2.0.0-rc.16 @solidjs/web@2.0.0-rc.16
-    pnpm add -D @solidjs/vite-plugin@3.0.0-next.50
+    pnpm add solid-js@2.0.0 @solidjs/web@2.0.0
+    pnpm add -D @solidjs/vite-plugin@3.0.0-next.57
     pnpm remove vite-plugin-solid
     ```
 
 === ":simple-yarn: Yarn"
     ```bash
-    yarn add solid-js@2.0.0-rc.16 @solidjs/web@2.0.0-rc.16
-    yarn add -D @solidjs/vite-plugin@3.0.0-next.50
+    yarn add solid-js@2.0.0 @solidjs/web@2.0.0
+    yarn add -D @solidjs/vite-plugin@3.0.0-next.57
     yarn remove vite-plugin-solid
     ```
 
 === ":simple-bun: Bun"
     ```bash
-    bun add solid-js@2.0.0-rc.16 @solidjs/web@2.0.0-rc.16
-    bun add -D @solidjs/vite-plugin@3.0.0-next.50
+    bun add solid-js@2.0.0 @solidjs/web@2.0.0
+    bun add -D @solidjs/vite-plugin@3.0.0-next.57
     bun remove vite-plugin-solid
     ```
 
 !!! note "Примечание"
 
-    Второй Solid ещё не вышел: на момент написания статьи актуальна версия `2.0.0-rc.16`, и до релиза её API ещё может меняться. Версии в командах выше указаны явно — если возьмёте более свежие, сверяйтесь с [руководством по миграции](https://github.com/solidjs/solid/blob/next/documentation/solid-2.0/MIGRATION.md).
+    Версии в командах выше указаны явно — если возьмёте более свежие, сверяйтесь с [руководством по миграции](https://github.com/solidjs/solid/blob/next/documentation/solid-2.0/MIGRATION.md).
 
 и обновите `vite.config.js`:
 
@@ -407,11 +407,9 @@ export default TodoForm;
 
 ## Документация
 
-Если вы заинтересовались Solid JS, загляните на [официальный сайт](https://www.solidjs.com) или в [переведённую документацию](https://soliddev.ru/guides/).
+Если вы заинтересовались Solid JS, загляните на [официальный сайт](https://www.solidjs.com).
 
-У второй версии документация отдельная — [v2.solidjs.com](https://v2.solidjs.com), — и там же пригодится [руководство по миграции](https://github.com/solidjs/solid/blob/next/documentation/solid-2.0/MIGRATION.md), если у вас уже есть проект на первой версии.
-
-Сравнить Solid с другими фреймворками можно [здесь](https://www.solidjs.com/guides/comparison).
+Кому-то может пригодиться [руководство по миграции](https://github.com/solidjs/solid/blob/next/documentation/solid-2.0/MIGRATION.md), если уже есть проект на первой версии.
 
 ## Заключение
 
